@@ -15,10 +15,24 @@ export async function m3u8Proxy(ctx) {
     const isStatic = allowedExtensions.some((ext) => url.endsWith(ext));
     const baseUrl = url.substring(0, url.lastIndexOf("/") + 1);
 
+    const urlObj = new URL(url);
+    const domain = `${urlObj.protocol}//${urlObj.hostname}`;
+
     const response = await fetch(url, {
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        accept: "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "en-GB-oxendict,en-US;q=0.9,en;q=0.8",
+        origin: "https://cloudnestra.com",
+        referer: "https://cloudnestra.com/",
+        "sec-ch-ua": `"Not;A=Brand";v="99", "Microsoft Edge";v="139", "Chromium";v="139"`,
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": `"Windows"`,
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "cross-site",
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0",
       },
     });
 
@@ -50,7 +64,6 @@ export async function m3u8Proxy(ctx) {
     const isVideoSegment = url.includes("page-") && url.endsWith(".html");
     const originalContentType = response.headers.get("content-type");
     if (isVideoSegment && !originalContentType?.includes("mpegurl")) {
-
       const responseData = await response.arrayBuffer();
       const uint8Array = new Uint8Array(responseData);
 
