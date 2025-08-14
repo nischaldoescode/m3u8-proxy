@@ -15,9 +15,6 @@ export async function m3u8Proxy(ctx) {
     const isStatic = allowedExtensions.some((ext) => url.endsWith(ext));
     const baseUrl = url.substring(0, url.lastIndexOf("/") + 1);
 
-    const urlObj = new URL(url);
-    const domain = `${urlObj.protocol}//${urlObj.hostname}`;
-
     const response = await fetch(url, {
       headers: {
         "User-Agent":
