@@ -18,7 +18,10 @@ export async function m3u8Proxy(ctx) {
     const urlObj = new URL(url);
     const domain = `${urlObj.protocol}//${urlObj.hostname}`;
 
-    const response = await fetch(url, {
+    const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(
+      url
+    )}`;
+    const response = await fetch(proxyUrl, {
       headers: {
         accept: "*/*",
         "accept-encoding": "gzip, deflate, br, zstd",
