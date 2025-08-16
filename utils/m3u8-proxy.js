@@ -15,22 +15,23 @@ export async function m3u8Proxy(ctx) {
     const urlObj = new URL(url);
     const domain = `${urlObj.protocol}//${urlObj.hostname}`;
 
-    const response = await fetch(url, {
-      headers: {
-        accept: "*/*",
-        "accept-encoding": "gzip, deflate, br, zstd",
-        "accept-language": "en-US,en;q=0.9",
-        "cache-control": "no-cache",
-        "pragma": "no-cache",
-        "sec-ch-ua": `"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"`,
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": `"Windows"`,
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "cross-site",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-      },
-    });
+      const response = await fetch(url, {
+        headers: {
+          accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "accept-language": "en-US,en;q=0.5",
+          "cache-control": "no-cache",
+          "connection": "keep-alive",
+          "dnt": "1",
+          "pragma": "no-cache",
+          referer: domain + "/",
+          "sec-fetch-dest": "document",
+          "sec-fetch-mode": "navigate",
+          "sec-fetch-site": "same-origin",
+          "upgrade-insecure-requests": "1",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0",
+        },
+      });
 
     console.log("Response status:", response.status, "for URL:", url);
     console.log(
@@ -189,6 +190,7 @@ export async function m3u8Proxy(ctx) {
     }
   }
 }
+
 
 
 
