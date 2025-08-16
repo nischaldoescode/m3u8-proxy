@@ -16,21 +16,9 @@ export async function m3u8Proxy(ctx) {
     const domain = `${urlObj.protocol}//${urlObj.hostname}`;
 
       const response = await fetch(url, {
-        headers: {
-          accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-          "accept-encoding": "gzip, deflate, br, zstd",
-          "accept-language": "en-US,en;q=0.5",
-          "cache-control": "no-cache",
-          "connection": "keep-alive",
-          "dnt": "1",
-          "pragma": "no-cache",
-          referer: domain + "/",
-          "sec-fetch-dest": "document",
-          "sec-fetch-mode": "navigate",
-          "sec-fetch-site": "same-origin",
-          "upgrade-insecure-requests": "1",
-          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0",
-        },
+          headers: {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+          },
       });
 
     console.log("Response status:", response.status, "for URL:", url);
@@ -190,6 +178,7 @@ export async function m3u8Proxy(ctx) {
     }
   }
 }
+
 
 
 
