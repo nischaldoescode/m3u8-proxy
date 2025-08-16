@@ -18,7 +18,7 @@ export async function m3u8Proxy(ctx) {
     const urlObj = new URL(url);
     const domain = `${urlObj.protocol}//${urlObj.hostname}`;
 
-    const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
       url
     )}`;
     const response = await fetch(proxyUrl, {
@@ -184,3 +184,4 @@ export async function m3u8Proxy(ctx) {
     }
   }
 }
+
