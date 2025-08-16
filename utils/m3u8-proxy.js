@@ -18,10 +18,7 @@ export async function m3u8Proxy(ctx) {
     const urlObj = new URL(url);
     const domain = `${urlObj.protocol}//${urlObj.hostname}`;
 
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
-      url
-    )}`;
-    const response = await fetch(proxyUrl, {
+    const response = await fetch(url, {
       headers: {
         accept: "*/*",
         "accept-encoding": "gzip, deflate, br, zstd",
@@ -55,6 +52,13 @@ export async function m3u8Proxy(ctx) {
       return;
     }
 
+        if (url.endsWith(".m3u8") && !originalContentType.includes("mpegurl")) {
+          const text = await response.text();
+          console.error("Expected m3u8 but got HTML/Error page:", text.slice(0,200));
+          ctx.response.status = 502;
+          ctx.response.body = "Upstream returned HTML instead of m3u8";
+          return;
+        }
     const headers = new Headers(response.headers);
     if (!isStatic) headers.delete("content-length");
 
@@ -184,4 +188,5 @@ export async function m3u8Proxy(ctx) {
     }
   }
 }
+
 
