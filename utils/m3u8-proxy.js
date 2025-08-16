@@ -1,7 +1,4 @@
-import {
-  createLineTransform,
-  allowedExtensions,
-} from "../utils/line-transform.js";
+import { createLineTransform,  allowedExtensions, } from "../utils/line-transform.js";
 
 export async function m3u8Proxy(ctx) {
   try {
@@ -51,16 +48,22 @@ export async function m3u8Proxy(ctx) {
       ctx.response.body = `Failed to fetch upstream: ${response.status} ${response.statusText}`;
       return;
     }
-
-        if (url.endsWith(".m3u8") && !originalContentType.includes("mpegurl")) {
-          const text = await response.text();
-          console.error("Expected m3u8 but got HTML/Error page:", text.slice(0,200));
-          ctx.response.status = 502;
-          ctx.response.body = "Upstream returned HTML instead of m3u8";
-          return;
-        }
     const headers = new Headers(response.headers);
     if (!isStatic) headers.delete("content-length");
+    const originalContentType = response.headers.get("content-type");
+
+    if (
+      url.endsWith(".m3u8") &&
+      !originalContentType.includes("mpegurl") &&
+      !originalContentType.includes("text/plain")
+    ) {
+      const text = await response.text();
+      console.error("Expected m3u8 but got HTML/Error page:", text.slice(0,200));
+      ctx.response.status = 502;
+      ctx.response.body = "Upstream returned HTML instead of m3u8";
+      return;
+    }
+
 
     // Allow CORS
     headers.set("access-control-allow-origin", "*");
@@ -69,7 +72,6 @@ export async function m3u8Proxy(ctx) {
     }
 
     const isVideoSegment = url.includes("page-") && url.endsWith(".html");
-    const originalContentType = response.headers.get("content-type");
     if (isVideoSegment && !originalContentType?.includes("mpegurl")) {
       const responseData = await response.arrayBuffer();
       const uint8Array = new Uint8Array(responseData);
@@ -188,5 +190,6 @@ export async function m3u8Proxy(ctx) {
     }
   }
 }
+
 
 
