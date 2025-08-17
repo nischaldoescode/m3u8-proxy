@@ -16,9 +16,21 @@ export async function m3u8Proxy(ctx) {
     const domain = `${urlObj.protocol}//${urlObj.hostname}`;
 
       const response = await fetch(url, {
-          headers: {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-          },
+        headers: {
+          accept: "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "accept-language": "en-GB-oxendict,en-US;q=0.9,en;q=0.8",
+          origin: "https://cloudnestra.com",
+          referer: "https://cloudnestra.com/",
+          "sec-ch-ua": `"Not;A=Brand";v="99", "Microsoft Edge";v="139", "Chromium";v="139"`,
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": `"Windows"`,
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0",
+        },
       });
 
     console.log("Response status:", response.status, "for URL:", url);
@@ -178,6 +190,7 @@ export async function m3u8Proxy(ctx) {
     }
   }
 }
+
 
 
 
